@@ -23,10 +23,10 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
     if(action.type === 'ADD_TO_CART'){
         let addedItem = state.items.find((item) => item.id === action.payload);
-        console.log(addedItem)
+        // console.log(addedItem)
         //check if the item already existed in the added Items
         let existed_item = state.addedItems.find((item) => action.payload === item.id)
-        console.log(action.payload, state);
+        // console.log(action.payload, state);
         if(existed_item){
             addedItem.quantity += 1;
 
