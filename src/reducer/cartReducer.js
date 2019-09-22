@@ -5,7 +5,6 @@ import Item3 from '../assets/images/item3.jpg'
 import Item4 from '../assets/images/item4.jpg'
 import Item5 from '../assets/images/item5.jpg'
 import Item6 from '../assets/images/item6.jpg'
-import { addToCart } from '../actions/index';
 
 const initialState = {
     items: [
@@ -46,6 +45,53 @@ const cartReducer = (state = initialState, action) => {
                 total: newTotal
             }
         }
+    }
+    else if (action.type === 'REMOVE_ITEM'){
+        let itemToRemoved = state.items.find((item) => action.payload === item.id);
+        let new_items = state.addedItems.filter((item) => action.payload !== item.id);
+        console.log(state.total)
+        //calculating the total
+        let newTotal = state.total - (itemToRemoved.price * itemToRemoved.quantity);
+        console.log(newTotal)
+        return {
+            ...state,
+            addedItems: new_items,
+            total: newTotal
+        }
+
+    }
+    else if (action.type === 'ADD_QUANTITY'){
+        let addedItem = state.items.find((item) => item.id === action.payload);
+        addedItem.quantity +=1;
+
+        let newTotal = state.total + addedItem.price;
+        return {
+            ...state,
+            total: newTotal
+        }
+    }
+    else if (action.type === 'SUBSTRACT_QUANTITY'){
+        let addedItem = state.items.find((item) => item.id === action.payload);
+        //case-1: if quantity =< 0;
+        if(addedItem.quantity === 1){
+            let new_items = state.addedItems.filter(item=>item.id !== action.id)
+            let newTotal = state.total - addedItem.price;
+
+            return {
+                ...state,
+                addedItems: new_items,
+                total: newTotal
+            }
+        }else{
+            addedItem.quantity -=1;
+            let newTotal = state.total - addedItem.price
+
+            return {
+                ...state,
+                total: newTotal
+            }
+        }
+
     }
     else{
         return state;

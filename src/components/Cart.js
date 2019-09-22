@@ -40,8 +40,8 @@ class Cart extends React.Component{
                                                 <div className="card-text d-flex">Quantity: <div className="font-weight-bold ml-2">{item.quantity}</div></div>
                                             </div>
                                             <div className="d-flex align-items-end">
-                                                <i className="fa fa-arrow-circle-o-up mr-2" aria-hidden="true" style={{fontSize: '24px'}} onClick={() => this.handleAddQuantity(item.id)}></i>
-                                                <i className="fa fa-arrow-circle-o-down" aria-hidden="true" style={{fontSize: '24px'}} onClick={() => this.handleSubstractQuantity(item.id)}></i>
+                                                <i className="fa fa-arrow-circle-o-up mr-2" aria-hidden="true" style={{fontSize: '24px', color: '#34c134' }} onClick={() => this.handleAddQuantity(item.id)}></i>
+                                                <i className="fa fa-arrow-circle-o-down" aria-hidden="true" style={{fontSize: '24px', color: 'red'}} onClick={() => this.handleSubstractQuantity(item.id)}></i>
                                             </div>
                                         </div>
                                     </div>
