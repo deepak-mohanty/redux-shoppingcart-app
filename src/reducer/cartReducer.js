@@ -22,7 +22,6 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
     if(action.type === 'ADD_TO_CART'){
         let addedItem = state.items.find((item) => item.id === action.payload);
-        // console.log(addedItem)
         //check if the item already existed in the added Items
         let existed_item = state.addedItems.find((item) => action.payload === item.id)
         // console.log(action.payload, state);
@@ -46,49 +45,49 @@ const cartReducer = (state = initialState, action) => {
             }
         }
     }
-    else if (action.type === 'REMOVE_ITEM'){
+    if (action.type === 'REMOVE_ITEM'){
         let itemToRemoved = state.items.find((item) => action.payload === item.id);
         let new_items = state.addedItems.filter((item) => action.payload !== item.id);
-        console.log(state.total)
         //calculating the total
         let newTotal = state.total - (itemToRemoved.price * itemToRemoved.quantity);
-        console.log(newTotal)
+        // console.log(newTotal)
         return {
             ...state,
             addedItems: new_items,
             total: newTotal
         }
-
     }
-    else if (action.type === 'ADD_QUANTITY'){
+    if (action.type === 'ADD_QUANTITY'){
         let addedItem = state.items.find((item) => item.id === action.payload);
-        addedItem.quantity +=1;
-
+        addedItem.quantity += 1;
         let newTotal = state.total + addedItem.price;
         return {
             ...state,
             total: newTotal
         }
     }
-    else if (action.type === 'SUBSTRACT_QUANTITY'){
+    if (action.type === 'SUBSTRACT_QUANTITY'){
         let addedItem = state.items.find((item) => item.id === action.payload);
-        //case-1: if quantity =< 0;
-        if(addedItem.quantity === 1){
-            let new_items = state.addedItems.filter(item=>item.id !== action.id)
-            let newTotal = state.total - addedItem.price;
 
+        //Check if addedItem quantity is greater than 1
+        if(addedItem.quantity > 1){
+            addedItem.quantity -=1;
+            let newTotal = state.total - addedItem.price
+    
             return {
                 ...state,
-                addedItems: new_items,
                 total: newTotal
             }
         }else{
-            addedItem.quantity -=1;
-            let newTotal = state.total - addedItem.price
-
+            //check if added item quantity is equals or less than 1
+                //if it is less than 1, remove the current item and update quantity, price and addedItems List : hence cart 
+            let removedItem = state.addedItems.filter(item => action.payload !== item.id );
+            let updatedTotal = state.total - addedItem.price
+            addedItem.quantity = 0;
             return {
                 ...state,
-                total: newTotal
+                addedItems: removedItem,
+                total: updatedTotal
             }
         }
 
