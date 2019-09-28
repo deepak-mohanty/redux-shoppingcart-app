@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from'react-router-dom';
 import { removeItem, addQuantity, substractQuantity } from '../actions/index';
 
 class Cart extends React.Component{
@@ -18,6 +17,7 @@ class Cart extends React.Component{
     }
 
     render(){
+        let totalCartValue = this.props.total;
         let addedItem = this.props.items.length ? 
             (
                 this.props.items.map(item => {
@@ -40,8 +40,8 @@ class Cart extends React.Component{
                                                 <div className="card-text d-flex">Quantity: <div className="font-weight-bold ml-2">{item.quantity}</div></div>
                                             </div>
                                             <div className="d-flex align-items-end">
-                                                <i className="fa fa-arrow-circle-o-up mr-2" aria-hidden="true" style={{fontSize: '24px'}} onClick={() => this.handleAddQuantity(item.id)}></i>
-                                                <i className="fa fa-arrow-circle-o-down" aria-hidden="true" style={{fontSize: '24px'}} onClick={() => this.handleSubstractQuantity(item.id)}></i>
+                                                <i className="fa fa-arrow-circle-o-up mr-2" aria-hidden="true" style={{fontSize: '24px', color: '#34c134' }} onClick={() => this.handleAddQuantity(item.id)}></i>
+                                                <i className="fa fa-arrow-circle-o-down" aria-hidden="true" style={{fontSize: '24px', color: 'red'}} onClick={() => this.handleSubstractQuantity(item.id)}></i>
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +57,19 @@ class Cart extends React.Component{
         return(
             <div className="container">
             <div className="cart">
-                <h5>You have ordered:</h5>
+                <div className="d-flex justify-content-between">
+                    <h5>Your Cart Items List</h5>
+                    {totalCartValue !== 0 ?
+                        (
+                        <div>
+                            <span className="font-weight-normal">Total Price :</span>
+                            <span className="font-weight-bold ml-2">$ {totalCartValue}</span>
+                        </div>
+                        )
+                        : " "
+                    }
+                    
+                </div>
                 <div className="d-flex flex-column">
                     {addedItem}
                 </div>
@@ -69,7 +81,8 @@ class Cart extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        items: state.cartReducer.addedItems
+        items: state.cartReducer.addedItems,
+        total: state.cartReducer.total
     }
 }
 

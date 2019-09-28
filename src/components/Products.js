@@ -40,7 +40,6 @@ class Product extends React.Component{
 }
 
 const mapStateToProps = (state, ownprops) => {
-    console.log(state.cartReducer.items)
     return{
         items: state.cartReducer.items
     }
