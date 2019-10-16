@@ -55,7 +55,7 @@ class Cart extends React.Component{
                 <p>Your cart is currently empty</p>
             )
         return(
-            <div className="container">
+            <div className="container mt-120">
             <div className="cart">
                 <div className="d-flex justify-content-between">
                     <h5>Your Cart Items List</h5>

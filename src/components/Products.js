@@ -5,9 +5,12 @@ import { addToCart } from '../actions/index';
 
 class Product extends React.Component{
 
-    handleAddProducts = (id) => {
-        return this.props.addToCart(id);
-    }
+    handleAddProducts = (id, title, event) => {
+        this.refs[title].classList.add('disabled')
+        return (
+            this.props.addToCart(id)
+        )
+    };
 
     render(){
 
@@ -20,7 +23,7 @@ class Product extends React.Component{
                         <h5 className="card-title">{item.title}</h5>
                         <p className="card-text">{item.desc}</p>
                         <div className="card-text d-flex">Price: <div className="font-weight-bold ml-2">$ {item.price}</div></div>
-                        <a href="#" className="btn rounded-circle addProductsBtn" onClick={() => {this.handleAddProducts(item.id)}}>
+                        <a href="#" ref={item.title} className="btn rounded-circle addProductsBtn" onClick={() => {this.handleAddProducts(item.id, item.title)}}>
                             <i className="fa fa-plus" aria-hidden="true"></i>
                         </a>
                         </div>
@@ -30,11 +33,12 @@ class Product extends React.Component{
         })
 
         return(
-            <div className="container">
-                <div className="row">
-                    {itemList}
+  
+                <div className="container mt-120">
+                    <div className="row">
+                        {itemList}
+                    </div>
                 </div>
-            </div>
         )
     }
 }
