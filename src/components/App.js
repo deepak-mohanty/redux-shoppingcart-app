@@ -12,9 +12,9 @@ class App extends React.Component {
             <BrowserRouter>
                 <Navbar />
                 <div>
-                <Route path="/" exact component={Product} />
-                <Route path="/cart" component={Cart} />
-                <Route path="/cart/order" component={Cart} />
+                    <Route path="/" exact component={Product} />
+                    <Route path="/cart" component={Cart} />
+                    <Route path="/cart/order" component={Cart} />
                 </div>
             </BrowserRouter>
         )
