@@ -1,19 +1,19 @@
-import React from 'react';
+import React, { createRef } from 'react';
 
 import { connect } from 'react-redux';
 import { addToCart } from '../actions/index';
 
 class Product extends React.Component{
-
+    titleref = React.createRef();
     handleAddProducts = (id, title, event) => {
-        this.refs[title].classList.add('disabled')
+        this.titleref[title].classList.add('disabled')
         return (
             this.props.addToCart(id)
         )
     };
 
     render(){
-
+        //Map through Item List
         let itemList = this.props.items.map( (item) => {
             return (
                 <div className="col-4" key={item.id}>
